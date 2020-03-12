@@ -9,9 +9,11 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
+    - name: Get leiningen
+      run: brew install lein
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: lein deps
@@ -26,6 +28,6 @@ jobs:
     - name: Install native-image
       run: gu install native-image
     - name: Compile ubjar into native-image
-      run: native-image -jar target/native-clj-cli-0.1.0-SNAPSHOT-standalone.jar -H:Name=native-clj-cli -H:+ReportExceptionStackTraces --initialize-at-build-time --verbose --no-fallback --no-server "-J-Xmx3g"
+      run: native-image -jar target/native-clj-cli-0.1.0-SNAPSHOT-standalone.jar -H:Name=native-clj-cli -H:+ReportExceptionStackTraces -H:+ReportUnsupportedElementsAtRuntime --initialize-at-build-time --verbose --no-fallback --no-server "-J-Xmx3g"
     - name: Test native executable
       run: echo ./native-clj-cli --help
