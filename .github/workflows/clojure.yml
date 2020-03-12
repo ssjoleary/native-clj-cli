@@ -13,7 +13,7 @@ jobs:
 
     steps:
     - name: Get leiningen
-      run: brew install lein
+      run: brew install leiningen
     - uses: actions/checkout@v2
     - name: Install dependencies
       run: lein deps
